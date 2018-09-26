@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -167,6 +168,62 @@ public class UsuariosOper extends ConexionBD {
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void ConsultaUsuarios(vista.Usuarios frmUsuarios) {
+
+        ArrayList<Object[]> lista = new ArrayList();
+
+        ConexionBD BD = new ConexionBD();
+
+        PreparedStatement ps = null;
+        Connection conn = BD.getConexion();
+        ResultSet rs = null;
+
+        String vSql = "SELECT CODIGO, NOMBRE, EMAIL, TIPO, ESTADO FROM USUARIOS ORDER BY NOMBRE";
+/*
+        if (!frmUsuarios.txtCodigo.equals("")) {
+            vSql = vSql + " WHERE CODIGO=?";
+        }
+*/
+        try {
+            ps = conn.prepareStatement(vSql);
+            /*
+            if (!frmUsuarios.txtCodigo.equals("")) {
+                ps.setString(1, frmUsuarios.txtCodigo.getText());
+            }
+*/
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Object[] fila = new Object[5];
+                for (int i = 0; i < 5; i++) {
+                    fila[i] = rs.getObject(i + 1);
+                }
+
+                lista.add(fila);
+            }
+
+            DefaultTableModel modelo = new DefaultTableModel();
+            modelo.addColumn("Código");
+            modelo.addColumn("Nombre");
+            modelo.addColumn("Email");
+            modelo.addColumn("Tipo");
+            modelo.addColumn("Estado");
+            frmUsuarios.tblUsuarios.setModel(modelo);
+
+            for (int i = 0; i < lista.size(); i++) {
+                modelo.addRow(lista.get(i));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         } finally {
             try {
                 conn.close();

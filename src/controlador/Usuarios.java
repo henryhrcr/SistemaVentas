@@ -2,6 +2,9 @@ package controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,15 +28,14 @@ public class Usuarios implements ActionListener {
     public Usuarios(vista.Usuarios vistaUsr) {
         //Inicializa los objetos
         this.vistaUsr = vistaUsr;
-        this.Oper = new modelo.UsuariosOper ();
-        this.usr = new modelo.Usuarios ();
-        
+        this.Oper = new modelo.UsuariosOper();
+        this.usr = new modelo.Usuarios();
+
         //Inicializa los listener para cada botón de la vista 
         this.vistaUsr.btnInsertar.addActionListener(this);
         this.vistaUsr.btnBorrar.addActionListener(this);
         this.vistaUsr.btnActualizar.addActionListener(this);
         this.vistaUsr.btnBuscar.addActionListener(this);
-
     }
 
     @Override
@@ -97,63 +99,6 @@ public class Usuarios implements ActionListener {
         }
     }
 
-    
-    public void ConsultaUsuarios(String usuario) {
-
-        ArrayList<Object[]> lista = new ArrayList ();
-
-        ConexionBD BD = new ConexionBD();
-
-        PreparedStatement ps = null;
-        Connection conn = BD.getConexion();
-        ResultSet rs = null;
-
-        String vSql = "SELECT CODIGO, NOMBRE, EMAIL, TIPO, ESTADO FROM USUARIOS ORDER BY NOMBRE";
-      
-        if (!usuario.equals("")) {
-           vSql = vSql + " WHERE CODIGO=?";
-        }
-
-        try {
-            ps = conn.prepareStatement(vSql);
-            if (!usuario.equals("")) {
-               ps.setString(1, usuario);
-            }
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                Object[] fila = new Object[5];
-                for (int i = 0; i < 5; i++) {
-                    fila[i] = rs.getObject(i + 1);
-                }
-
-                lista.add(fila);
-            }
-
-            DefaultTableModel modelo = new DefaultTableModel();
-            modelo.addColumn("Código");
-            modelo.addColumn("Nombre");
-            modelo.addColumn("Email");
-            modelo.addColumn("Tipo");
-            modelo.addColumn("Estado");
-            vistaUsr.tblUsuarios.setModel(modelo);
-            
-
-            for (int i = 0; i < lista.size(); i++) {
-                modelo.addRow(lista.get(i));
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-    
-    
     public void limpiar() {
         vistaUsr.txtCodigo.setText(null);
         vistaUsr.txtNombre.setText(null);

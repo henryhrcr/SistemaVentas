@@ -26,7 +26,9 @@ public class Usuarios extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-        //ConsultaUsuarios(txtCodigo.getText());
+        modelo.UsuariosOper Oper = new modelo.UsuariosOper ();
+        
+        Oper.ConsultaUsuarios(this);
     }
 
     @SuppressWarnings("unchecked")
