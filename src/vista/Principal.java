@@ -3,6 +3,7 @@ package vista;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import static java.awt.SystemColor.window;
 import javax.swing.ImageIcon;
 
 /**
@@ -13,19 +14,19 @@ public class Principal extends javax.swing.JFrame {
 
     public Principal() {
         initComponents();
-        this.setExtendedState(MAXIMIZED_BOTH);
-        this.getContentPane().setBackground(Color.DARK_GRAY);
+        //this.getContentPane().setBackground(Color.DARK_GRAY);
         this.setVisible(true);
+        setExtendedState(MAXIMIZED_BOTH);        
     }
-    
+
     /*
     public void paint (Graphics g) {
         Dimension dim = this.getContentPane().getSize();
         ImageIcon img = new ImageIcon(getClass().getResource("/imagenes/FondoAzul.png"));
-        g.drawImage (img.getImage(), 0, 100, dim.width, dim.height,null);
-        //paint(g);
+        g.drawImage (img.getImage(), 0, 0, dim.width, dim.height,null);
     }
     */
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -40,9 +41,9 @@ public class Principal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de Ventas");
-        setMinimumSize(new java.awt.Dimension(770, 482));
-        setName("Principal"); // NOI18N
-        setResizable(false);
+        setMinimumSize(new java.awt.Dimension(780, 600));
+        setName("frmPrincipal"); // NOI18N
+        setPreferredSize(new java.awt.Dimension(780, 600));
 
         mnuAdministrativo.setText("Administrativo");
 
@@ -77,12 +78,14 @@ public class Principal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 770, Short.MAX_VALUE)
+            .addGap(0, 775, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 459, Short.MAX_VALUE)
+            .addGap(0, 579, Short.MAX_VALUE)
         );
+
+        getAccessibleContext().setAccessibleName("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -92,12 +95,11 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_mnuSalirActionPerformed
 
     private void mnuAdmUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuAdmUsuariosActionPerformed
-        
+
         vista.Usuarios frmUsuarios = new vista.Usuarios();
-        controlador.Usuarios ctrusuarios = new controlador.Usuarios (frmUsuarios);
+        controlador.Usuarios ctrusuarios = new controlador.Usuarios(frmUsuarios);
     }//GEN-LAST:event_mnuAdmUsuariosActionPerformed
 
-  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar jMenuBar1;
